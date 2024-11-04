@@ -37,16 +37,24 @@ export class InicioDeSesionPage implements OnInit {
       const success = await this.authService.login(this.usuario, this.clave);
 
       if (success) {
-        this.authService.getUserType().subscribe(userType => {
-          if (userType === 'Docente') {
-            this.router.navigate(['/principal-docente']);
-          } else if (userType === 'Alumno') {
-            this.router.navigate(['/principal-alumno']);
+        let userTypeSubscription = this.authService.getUserType().subscribe({
+          next: (userType) => {
+            if (userType === 'Docente') {
+              this.router.navigate(['/principal-docente']);
+            } else if (userType === 'Alumno') {
+              this.router.navigate(['/principal-alumno']);
+            }
+            // Limpiar campos
+            this.usuario = '';
+            this.clave = '';
+            // Desuscribirse después de navegar
+            userTypeSubscription.unsubscribe();
+          },
+          error: async (error) => {
+            await this.mostrarAlerta('Error', 'Error al obtener el tipo de usuario');
+            this.isLoading = false;
           }
         });
-        // Limpiar campos
-        this.usuario = '';
-        this.clave = '';
       } else {
         await this.mostrarAlerta('Error', 'Credenciales incorrectas');
       }

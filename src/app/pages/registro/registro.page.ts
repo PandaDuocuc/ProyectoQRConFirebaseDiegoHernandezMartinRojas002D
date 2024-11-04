@@ -11,7 +11,8 @@ import { AuthService } from '../../firebase/auth.service';
 export class RegistroPage {
   usuario: string = '';
   clave: string = '';
-  tipo: string = 'Alumno'; // Valor por defecto
+  nombreUsuario: string = ''; // Nuevo campo
+  tipo: string = 'Alumno';
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -20,7 +21,7 @@ export class RegistroPage {
   isLoading: boolean = false;
 
   async registrar() {
-    if (!this.usuario || !this.clave || !this.tipo) {
+    if (!this.usuario || !this.clave || !this.tipo || !this.nombreUsuario) {
       await this.mostrarAlerta('Error', 'Todos los campos son requeridos');
       return;
     }
@@ -28,14 +29,12 @@ export class RegistroPage {
     this.isLoading = true;
 
     try {
-      // Intentar registrar al usuario
-      await this.authService.register(this.usuario, this.clave, this.tipo);
+      await this.authService.register(this.usuario, this.clave, this.tipo, this.nombreUsuario);
       await this.mostrarAlerta('Éxito', 'Usuario registrado correctamente');
       this.router.navigate(['/inicio-de-sesion']);
     } catch (error: any) {
       let mensaje = 'Ocurrió un error durante el registro';
 
-      // Manejar errores específicos de Firebase
       if (error.code === 'auth/email-already-in-use') {
         mensaje = 'El correo electrónico ya está registrado';
       } else if (error.code === 'auth/invalid-email') {

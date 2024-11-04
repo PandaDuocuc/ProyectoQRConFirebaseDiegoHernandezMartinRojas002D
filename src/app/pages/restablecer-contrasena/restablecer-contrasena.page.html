@@ -1,0 +1,16 @@
+<app-header>
+  <ion-back-button defaultHref="/inicio-de-sesion" back-button></ion-back-button>
+</app-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <div class="custom-padding">
+    <!-- Campo de correo electrónico -->
+    <ion-item>
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input [(ngModel)]="correo" type="email"></ion-input>
+    </ion-item>
+
+    <!-- Botón para enviar la solicitud -->
+    <ion-button (click)="enviarSolicitud()">Enviar solicitud de restablecimiento</ion-button>
+  </div>
+</ion-content>

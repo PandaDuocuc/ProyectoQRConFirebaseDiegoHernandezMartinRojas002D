@@ -1,0 +1,37 @@
+<ion-content class="ion-padding ion-text-center">
+  <div class="custom-padding">
+    @if (isLoading) {
+      <ion-spinner name="bubbles"></ion-spinner>
+    }
+
+    <h2>Inicio de Sesión</h2>
+
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input type="email" [(ngModel)]="usuario"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="clave"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="login()">
+      Iniciar sesión
+    </ion-button>
+
+    <ion-button fill="clear" color="primary" (click)="irARestablecerContrasena()">
+      ¿Olvidaste tu contraseña?
+    </ion-button>
+
+    <ion-button fill="clear" routerLink="/registro">
+      ¿No tienes cuenta? Regístrate
+    </ion-button>
+
+    @if (loginFailed) {
+      <ion-text color="danger">
+        <p>Usuario o contraseña incorrectos.</p>
+      </ion-text>
+    }
+  </div>
+</ion-content>

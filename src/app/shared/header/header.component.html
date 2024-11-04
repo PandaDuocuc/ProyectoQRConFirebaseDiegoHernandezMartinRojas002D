@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ng-content select="[back-button]"></ng-content> <!-- Botón de retroceso -->
+    </ion-buttons>
+
+    <!-- Mostrar el título solo si mostrarBienvenida es falso -->
+    <ion-title *ngIf="!mostrarBienvenida">{{ titulo }}</ion-title>
+
+    <!-- Mostrar el saludo solo si mostrarBienvenida es verdadero -->
+    <ion-title *ngIf="mostrarBienvenida">
+      Bienvenido, {{ nombreUsuario }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
